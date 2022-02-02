@@ -40,6 +40,7 @@ return system->Get_BulkEnergy();
     }
   catch(int e)
     {cout<<"Error "<<e<<"\n";}
+  return 0.;
 }
   void UpdateSystemEnergy(void* ptr,int* array, int LX, int LY)
   {
@@ -69,15 +70,21 @@ return system->Get_BulkEnergy();
     catch(int e)
       {cout<<"Error "<<e<<"\n";}
   }
-  void OutputSystemSite(void* ptr, const char* filename)
-  {
-    try
-      {
-	System* system = reinterpret_cast<System *>(ptr);
-	system->OutputSite(filename);
-      }
-    catch(int e){cout<<"error : "<<e<<"\n";}
-  }
+  void OutputSystemSite(void* ptr, const char* filename){
+  try{
+      System* system = reinterpret_cast<System *>(ptr);
+      system->OutputSite(filename);
+    }
+  catch(int e){cout<<"error : "<<e<<"\n";}
+}
+void OutputSystemSiteExtended(void* ptr, const char* filename){
+  bool Extended(true);
+  try{
+      System* system = reinterpret_cast<System *>(ptr);
+      system->OutputSite(filename,Extended);
+    }
+  catch(int e){cout<<"error : "<<e<<"\n";}
+}
   /*
 void OutputSystemSpring(void* ptr, const char* filename)
   {

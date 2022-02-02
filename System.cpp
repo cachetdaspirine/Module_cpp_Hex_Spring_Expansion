@@ -318,7 +318,7 @@ void System::MakeSprings(){
                 for(int k = 0; k<6; k++) {
                         SpringNode[k] = nodes[k][{it.second->g_I(),it.second->g_J()}];
                 }
-                springs.insert(new Spring(SpringNode));
+                springs.insert(new Spring(SpringNode,it.second->g_I(),it.second->g_J()));
         }
 }
 
@@ -346,11 +346,34 @@ for(auto& it: sites)
         }
         Out.close();
 }
+void System::OutputSite(const char* filename,bool Extended)
+{
+        ofstream Out;
+        Out.open(filename, ofstream::out | ofstream::trunc);
+        /*
+for(auto& it: sites)
+        {
+                vector<int> Index(it.second->g_nodes());
+                int i(it.second->g_I()),j(it.second->g_J());
+                for(auto& ind:Index)
+                {
+                        Out<<nodes[ind][{i,j}]->g_X()<<" "<<nodes[ind][{i,j}]->g_Y()<<" ";
+                }
+                Out<<"\n";
+        }*/
+        for(auto& spring : springs){
+          for(auto& node : spring->g_nodes()){
+            Out<< node->g_X() << " " << node->g_Y()<<" ";
+          }
+          Out<<spring->get_E()<<" "<<spring->g_I()<<" "<<spring->g_J()<<"\n";
+        }
+        Out.close();
+}
 void System:: g_G(int i, int j, double& Xg, double& Yg){
 }
 bool System::NeighExist(int i, int j, int k)
 {
-
+return false;
 }
 double System::Get_BulkEnergy(){
         //ResetNodePosition(eps);
@@ -405,7 +428,8 @@ double System::Get_Extension(int ax)
     XRight = XRight/SidesRight.size();
     return XRight-XLeft;
   }
-  if(ax == 1){
+  else{
+  //if(ax == 1){
     vector<Node*> SidesTop(GetSideNodes(true,true));
     vector<Node*> SidesBot(GetSideNodes(false,true));
     double YTop(0),YBot(0);

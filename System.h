@@ -29,6 +29,7 @@ void MoveNodes(double Gx, double Gy);
 void UpdateEnergy(int* Array,int SizeX, int SizeY);
 //Output functions :
 void OutputSite(const char* filename);
+void OutputSite(const char* filename,bool Extended);
 //-----------------------------------------------------------------------------------------------
 double K1,K2,Kvol,eps;
 private:
